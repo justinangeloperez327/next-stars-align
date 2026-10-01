@@ -77,10 +77,12 @@ npm run build
 
 Deploy this repository directly to Vercel. No Express deployment and no `API_URL` environment variable are required.
 
-Required environment variables:
+Optional for rendering the public site, required for full functionality:
 
-- `DATABASE_URL`
-- `SESSION_SECRET`
+- `DATABASE_URL` — enables persistent application data
+- `SESSION_SECRET` — enables authenticated sessions
+
+If these are not configured, public pages still render. Database-backed lists use empty states instead of failing the request.
 
 Resume files are currently stored in PostgreSQL with the application record, capped at 5 MB per upload.
 
@@ -99,8 +101,12 @@ which executes:
 
 ```bash
 prisma generate
-prisma migrate deploy
 next build
 ```
 
-This applies pending migrations before the application becomes active.
+The UI can deploy without a database connection. When a production database is configured, apply committed migrations separately with:
+
+```bash
+npm run db:deploy
+```
+

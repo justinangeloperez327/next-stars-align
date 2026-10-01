@@ -11,24 +11,25 @@ const SESSION_COOKIE = "stars_align_session";
 const SESSION_TTL = 60 * 60 * 24 * 7;
 
 function secret() {
-  const value = process.env.SESSION_SECRET;
-
-  if (!value) {
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("SESSION_SECRET is required.");
-    }
-
-    return "stars-align-development-secret";
-  }
-
-  return value;
+  return process.env.SESSION_SECRET || null;
 }
 
 function sign(payload) {
-  return createHmac("sha256", secret()).update(payload).digest("base64url");
+  const sessionSecret = secret();
+  if (!sessionSecret) return null;
+
+  return createHmac("sha256", sessionSecret)
+    .update(payload)
+    .digest("base64url");
 }
 
 function encodeSession(user) {
+  const signatureSecret = secret();
+
+  if (!signatureSecret) {
+    throw new Error("SESSION_SECRET is required for authentication.");
+  }
+
   const payload = Buffer.from(
     JSON.stringify({
       id: user.id,
@@ -43,10 +44,14 @@ function encodeSession(user) {
 
 function decodeSession(value) {
   try {
-    const [payload, signature] = String(value || "").split(".");
+    if (!value || !secret()) return null;
+
+    const [payload, signature] = String(value).split(".");
     if (!payload || !signature) return null;
 
     const expected = sign(payload);
+    if (!expected) return null;
+
     const signatureBuffer = Buffer.from(signature);
     const expectedBuffer = Buffer.from(expected);
 
