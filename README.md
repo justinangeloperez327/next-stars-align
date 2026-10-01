@@ -55,10 +55,10 @@ After creating a PostgreSQL database:
 
 ```bash
 npm install
-npm run db:push
+npm run db:migrate
 ```
 
-This creates the Stars Align tables from `prisma/schema.prisma`.
+This creates a development migration and applies it to your database.
 
 ## Development
 
@@ -83,3 +83,24 @@ Required environment variables:
 - `SESSION_SECRET`
 
 Resume files are currently stored in PostgreSQL with the application record, capped at 5 MB per upload.
+
+
+## Production database migrations
+
+Production deployments use committed Prisma migrations.
+
+Vercel runs:
+
+```bash
+npm run vercel-build
+```
+
+which executes:
+
+```bash
+prisma generate
+prisma migrate deploy
+next build
+```
+
+This applies pending migrations before the application becomes active.
