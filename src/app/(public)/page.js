@@ -17,12 +17,9 @@ export default async function HomePage({ searchParams }) {
       <section className="mt-12">
         <JobFilters values={params} />
         <div className="mt-6 grid gap-4">
-          {jobs.length ? jobs.map((job) => <JobCard key={job.id} job={{ ...job, _id: job.id }} />) : (
-            <div className="panel rounded-2xl p-10 text-center">
-              <h2 className="text-xl font-bold">No jobs found</h2>
-              <p className="muted mt-2">Try a broader search or remove one of the filters.</p>
-            </div>
-          )}
+          {jobs.map((job) => (
+            <JobCard key={job.id} job={{ ...job, _id: job.id }} />
+          ))}
         </div>
       </section>
     </div>
