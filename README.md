@@ -37,3 +37,16 @@ npm run dev
 npm run lint
 npm run build
 ```
+
+
+## CI/CD artifact
+
+Every push to `main` runs lint and a production build, then packages the Next.js standalone server as a GitHub Actions artifact.
+
+The artifact contains the standalone runtime and static assets. After extraction, start it with:
+
+```bash
+node server.js
+```
+
+Set `API_URL` in the deployment environment to the production Express API URL.

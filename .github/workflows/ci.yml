@@ -1,12 +1,22 @@
-name: CI
+name: CI/CD
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: next-stars-align-main
+  cancel-in-progress: true
 
 jobs:
-  validate:
+  build:
+    name: Validate and package
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -23,7 +33,45 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
+      - name: Build standalone app
         run: npm run build
         env:
           API_URL: http://127.0.0.1:5000/api
+
+      - name: Assemble deployment artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p .next/standalone/.next
+          cp -r .next/static .next/standalone/.next/static
+
+          if [ -d public ]; then
+            cp -r public .next/standalone/public
+          fi
+
+          tar             --exclude='.next/cache'             -czf "next-stars-align-${GITHUB_SHA}.tar.gz"             -C .next/standalone .
+
+          sha256sum "next-stars-align-${GITHUB_SHA}.tar.gz"             > "next-stars-align-${GITHUB_SHA}.sha256"
+
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: next-stars-align-${{ github.sha }}
+          path: |
+            next-stars-align-${{ github.sha }}.tar.gz
+            next-stars-align-${{ github.sha }}.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Artifact summary
+        shell: bash
+        run: |
+          {
+            echo "### Deployment artifact"
+            echo ""
+            echo "- Commit: `${GITHUB_SHA}`"
+            echo "- Bundle: `next-stars-align-${GITHUB_SHA}.tar.gz`"
+            echo "- Runtime: Node.js 22"
+            echo "- Start command after extraction: `node server.js`"
+          } >> "$GITHUB_STEP_SUMMARY"
