@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { logoutAction } from "@/app/actions";
-import { getSession } from "@/lib/auth";
 import Brand from "@/components/brand";
+import { getSession } from "@/lib/auth";
 
 export default async function SiteShell({ children }) {
   const session = await getSession();
@@ -10,35 +10,35 @@ export default async function SiteShell({ children }) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#070511]/90 backdrop-blur-xl">
-        <div className="shell flex min-h-20 items-center justify-between gap-6">
+      <header className="site-header">
+        <div className="shell site-header-inner glass-strong">
           <Brand />
-          <nav className="flex items-center gap-5 text-sm font-bold">
-            <Link href="/">Jobs</Link>
-            <Link href="/companies">Companies</Link>
+          <nav className="site-nav" aria-label="Primary navigation">
+            <Link className="nav-link" href="/">Jobs</Link>
+            <Link className="nav-link" href="/companies">Companies</Link>
             {employee ? (
               <>
-                <Link href="/applied-jobs">Applied</Link>
-                <Link href="/profile">Profile</Link>
+                <Link className="nav-link" href="/applied-jobs">Applied</Link>
+                <Link className="nav-link" href="/profile">Profile</Link>
                 <form action={logoutAction}>
-                  <button className="btn btn-secondary" type="submit">Logout</button>
+                  <button className="btn btn-secondary min-h-10 py-2" type="submit">Logout</button>
                 </form>
               </>
             ) : (
               <>
-                <Link href="/about">About</Link>
-                <Link href="/register">Register</Link>
-                <Link className="btn btn-primary" href="/login">Login</Link>
+                <Link className="nav-link" href="/about">About</Link>
+                <Link className="nav-link" href="/register">Register</Link>
+                <Link className="btn btn-primary min-h-10 py-2" href="/login">Login</Link>
               </>
             )}
           </nav>
         </div>
       </header>
       <main>{children}</main>
-      <footer className="mt-20 border-t border-white/10 py-8">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 text-sm text-white/55">
-          <span>Stars Align</span>
-          <span>Full-stack Next.js job platform.</span>
+      <footer className="mt-24 pb-8 pt-10">
+        <div className="shell flex flex-wrap items-center justify-between gap-4 border-t border-white/8 pt-7 text-sm text-white/50">
+          <Brand />
+          <span>Focused hiring, without the noise.</span>
         </div>
       </footer>
     </div>
