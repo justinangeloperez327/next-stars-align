@@ -1,10 +1,7 @@
-import DashboardShell from "@components/layouts/DashboardShell";
-import { EmployerGate } from "@components/guards/AuthGates";
+import EmployerShell from "@/components/employer-shell";
+import { requireRole } from "@/lib/auth";
 
-export default function EmployerLayout({ children }) {
-  return (
-    <EmployerGate>
-      <DashboardShell>{children}</DashboardShell>
-    </EmployerGate>
-  );
+export default async function EmployerLayout({ children }) {
+  const session = await requireRole("employer");
+  return <EmployerShell user={session.user}>{children}</EmployerShell>;
 }

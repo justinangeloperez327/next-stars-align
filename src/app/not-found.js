@@ -1,17 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import ParticleEffect from "@components/ParticleEffect";
 
 export default function NotFound() {
   return (
-    <>
-      <ParticleEffect />
-      <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-violet-950 to-indigo-900">
-        <h1 className="text-6xl font-bold text-white">404</h1>
-        <p className="mt-3 text-2xl font-semibold text-white">Page Not Found</p>
-        <Link href="/" className="mt-4 rounded-md bg-white px-4 py-2 text-black">Go back to Home</Link>
-      </section>
-    </>
+    <main className="shell flex min-h-screen flex-col items-center justify-center text-center">
+      <p className="mb-3 text-sm font-bold uppercase tracking-[0.24em] text-violet-400">404</p>
+      <h1 className="text-4xl font-bold">Page not found</h1>
+      <p className="muted mt-3">The page you requested does not exist.</p>
+      <Link className="btn btn-primary mt-8" href="/">Back to jobs</Link>
+    </main>
   );
 }

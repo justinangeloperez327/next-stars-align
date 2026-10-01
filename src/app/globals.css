@@ -1,52 +1,109 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  --background: #070511;
+  --surface: #120c22;
+  --surface-soft: #1a1230;
+  --border: #2d214d;
+  --text: #f8fafc;
+  --muted: #b8b3c7;
+  --brand: #7c3aed;
+  --brand-strong: #6d28d9;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
-  min-height: 100%;
-  background: #020617;
+  background: var(--background);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(124, 58, 237, 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 20%, rgba(79, 70, 229, 0.16), transparent 30rem),
+    var(--background);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 button,
-a {
-  -webkit-tap-highlight-color: transparent;
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-@keyframes fadeScaleIn {
-  0% { opacity: 0; transform: scale(0.80); }
-  50% { opacity: 0.5; transform: scale(1.10); }
-  100% { opacity: 1; transform: scale(1); }
+::selection {
+  background: rgba(124, 58, 237, 0.45);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
 }
 
-@keyframes leftToRight {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+.panel {
+  border: 1px solid var(--border);
+  background: rgba(18, 12, 34, 0.88);
+  backdrop-filter: blur(14px);
 }
 
-@keyframes rightToLeft {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+.field {
+  width: 100%;
+  border: 1px solid #40325f;
+  border-radius: 0.75rem;
+  background: #0d0918;
+  color: #fff;
+  padding: 0.75rem 0.9rem;
+  outline: none;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10%); }
-  to { opacity: 1; transform: translateY(0); }
+.field:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.16);
 }
 
-.left-to-right { animation: leftToRight 0.5s ease-in-out; }
-.right-to-left { animation: rightToLeft 0.5s ease-in-out; }
-.form-fade-in { animation: fadeScaleIn 0.8s ease-in-out; }
-.fade-in { animation: fadeIn 0.8s ease-in-out; }
-.fade-up { animation: fadeUp 0.8s ease-in-out; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-strong);
+}
+
+.btn-secondary {
+  border-color: #40325f;
+  background: #171024;
+  color: #fff;
+}
+
+.btn-danger {
+  background: #991b1b;
+  color: #fff;
+}
+
+.muted {
+  color: var(--muted);
+}

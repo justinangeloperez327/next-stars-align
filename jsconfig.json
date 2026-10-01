@@ -2,22 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@features/*": ["./src/features/*"],
-      "@views/*": ["./src/views/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@data/*": ["./src/data/*"],
-      "@auth/*": ["./src/features/authentication/*"],
-      "@jobs/*": ["./src/features/jobs/*"],
-      "@jobsComponents/*": ["./src/features/jobs/components/*"],
-      "@authComponents/*": ["./src/features/authentication/components/*"],
-      "@jobsHooks/*": ["./src/features/jobs/hooks/*"],
-      "@authHooks/*": ["./src/features/authentication/hooks/*"],
-      "@jobsSlices/*": ["./src/features/jobs/slices/*"],
-      "@authSlices/*": ["./src/features/authentication/slices/*"],
-      "@jobsServices/*": ["./src/features/jobs/services/*"],
-      "@authServices/*": ["./src/features/authentication/services/*"]
+      "@/*": ["./src/*"]
     }
   }
 }
