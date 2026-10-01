@@ -1,11 +1,11 @@
-import { api } from "@/lib/api";
 import { requireRole } from "@/lib/auth";
+import { getAdminDashboard } from "@/lib/data";
 
 export const metadata = { title: "Admin dashboard" };
 
 export default async function AdminDashboardPage() {
   await requireRole("admin");
-  const dashboard = await api("/dashboard");
+  const dashboard = await getAdminDashboard();
 
   return (
     <main className="shell py-14">

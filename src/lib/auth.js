@@ -1,59 +1,96 @@
 import "server-only";
 
+import {
+  createHmac,
+  timingSafeEqual,
+} from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const TOKEN_COOKIE = "stars_align_token";
-const USER_COOKIE = "stars_align_user";
+const SESSION_COOKIE = "stars_align_session";
+const SESSION_TTL = 60 * 60 * 24 * 7;
 
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
-  path: "/",
-  maxAge: 60 * 60 * 24 * 7,
-};
+function secret() {
+  const value = process.env.SESSION_SECRET;
 
-function encodeUser(user) {
-  return Buffer.from(JSON.stringify(user)).toString("base64url");
+  if (!value) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("SESSION_SECRET is required.");
+    }
+
+    return "stars-align-development-secret";
+  }
+
+  return value;
 }
 
-function decodeUser(value) {
+function sign(payload) {
+  return createHmac("sha256", secret()).update(payload).digest("base64url");
+}
+
+function encodeSession(user) {
+  const payload = Buffer.from(
+    JSON.stringify({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      exp: Math.floor(Date.now() / 1000) + SESSION_TTL,
+    }),
+  ).toString("base64url");
+
+  return `${payload}.${sign(payload)}`;
+}
+
+function decodeSession(value) {
   try {
-    return JSON.parse(Buffer.from(value, "base64url").toString("utf8"));
+    const [payload, signature] = String(value || "").split(".");
+    if (!payload || !signature) return null;
+
+    const expected = sign(payload);
+    const signatureBuffer = Buffer.from(signature);
+    const expectedBuffer = Buffer.from(expected);
+
+    if (
+      signatureBuffer.length !== expectedBuffer.length ||
+      !timingSafeEqual(signatureBuffer, expectedBuffer)
+    ) {
+      return null;
+    }
+
+    const session = JSON.parse(
+      Buffer.from(payload, "base64url").toString("utf8"),
+    );
+
+    if (!session.exp || session.exp <= Math.floor(Date.now() / 1000)) {
+      return null;
+    }
+
+    return session;
   } catch {
     return null;
   }
 }
 
-export async function createSession(token, user) {
+export async function createSession(user) {
   const cookieStore = await cookies();
-  cookieStore.set(TOKEN_COOKIE, token, cookieOptions);
-  cookieStore.set(USER_COOKIE, encodeUser(user), cookieOptions);
+
+  cookieStore.set(SESSION_COOKIE, encodeSession(user), {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: SESSION_TTL,
+  });
 }
 
 export async function clearSession() {
   const cookieStore = await cookies();
-  cookieStore.delete(TOKEN_COOKIE);
-  cookieStore.delete(USER_COOKIE);
+  cookieStore.delete(SESSION_COOKIE);
 }
 
 export async function getSession() {
   const cookieStore = await cookies();
-  const token = cookieStore.get(TOKEN_COOKIE)?.value;
-  const encodedUser = cookieStore.get(USER_COOKIE)?.value;
-
-  if (!token || !encodedUser) {
-    return null;
-  }
-
-  const user = decodeUser(encodedUser);
-
-  if (!user) {
-    return null;
-  }
-
-  return { token, user };
+  return decodeSession(cookieStore.get(SESSION_COOKIE)?.value);
 }
 
 export async function requireGuest() {
@@ -61,8 +98,8 @@ export async function requireGuest() {
 
   if (!session) return;
 
-  if (session.user.role === "employer") redirect("/employer/dashboard");
-  if (session.user.role === "admin") redirect("/admin/dashboard");
+  if (session.role === "employer") redirect("/employer/dashboard");
+  if (session.role === "admin") redirect("/admin/dashboard");
 
   redirect("/");
 }
@@ -70,7 +107,7 @@ export async function requireGuest() {
 export async function requireRole(role) {
   const session = await getSession();
 
-  if (!session || session.user.role !== role) {
+  if (!session || session.role !== role) {
     redirect("/login");
   }
 

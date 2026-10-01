@@ -1,13 +1,16 @@
 import { redirect } from "next/navigation";
 
 import { submitApplicationAction } from "@/app/actions";
-import { api } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { getJob } from "@/lib/data";
 
 export default async function ApplicationPage({ params, searchParams }) {
+  const session = await requireRole("employee");
   const { jobId } = await params;
   const query = await searchParams;
-  const job = await api(`/jobs/${jobId}/details`);
+  const job = await getJob(jobId, session.id);
 
+  if (!job) redirect("/");
   if (job.applied) redirect(`/jobs/${jobId}/details`);
 
   const action = submitApplicationAction.bind(null, jobId);
@@ -22,6 +25,7 @@ export default async function ApplicationPage({ params, searchParams }) {
           <label className="grid gap-2">
             <span className="text-sm font-bold">Resume</span>
             <input accept=".pdf,.doc,.docx" className="field" name="resume" required type="file" />
+            <span className="muted text-xs">PDF, DOC, or DOCX · maximum 5 MB</span>
           </label>
           <label className="grid gap-2">
             <span className="text-sm font-bold">Cover letter</span>

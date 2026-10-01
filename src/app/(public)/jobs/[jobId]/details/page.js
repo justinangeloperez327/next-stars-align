@@ -1,21 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { api, ApiError } from "@/lib/api";
+import { getJob } from "@/lib/data";
 import { formatDate } from "@/lib/format";
 import { getSession } from "@/lib/auth";
 
 export default async function JobDetailsPage({ params }) {
   const { jobId } = await params;
   const session = await getSession();
+  const job = await getJob(
+    jobId,
+    session?.role === "employee" ? session.id : null,
+  );
 
-  let job;
-  try {
-    job = await api(`/jobs/${jobId}${session ? "/details" : ""}`, { auth: Boolean(session) });
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 404) notFound();
-    throw error;
-  }
+  if (!job) notFound();
 
   return (
     <div className="shell py-14">
@@ -45,7 +43,7 @@ export default async function JobDetailsPage({ params }) {
         </div>
 
         <div className="mt-10">
-          {session?.user?.role === "employee" ? (
+          {session?.role === "employee" ? (
             job.applied ? (
               <span className="btn btn-secondary cursor-default">Already applied</span>
             ) : (

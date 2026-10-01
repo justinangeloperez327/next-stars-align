@@ -1,33 +1,68 @@
 # Stars Align
 
-Stars Align is a Next.js App Router frontend for the Stars Align job platform.
+Stars Align is a full-stack job platform built entirely with Next.js.
+
+There is no separate Express application and no frontend-to-backend HTTP service layer. The App Router owns rendering, authentication, data access, mutations, and protected file delivery.
+
+## Stack
+
+- Next.js 16.3.8 App Router
+- React 19.3
+- Tailwind CSS 4
+- Prisma ORM 7.10
+- PostgreSQL
+- Server Components for reads
+- Server Actions for mutations
+- Signed HTTP-only cookie sessions
 
 ## Architecture
 
-This project is intentionally structured as a Next.js application rather than a port of the previous CRA frontend.
+```text
+src/
+├── app/
+│   ├── (public)/
+│   ├── (auth)/
+│   ├── (employee)/
+│   ├── (employer)/
+│   ├── (admin)/
+│   ├── resumes/[applicationId]/route.js
+│   └── actions.js
+├── components/
+└── lib/
+    ├── auth.js
+    ├── data.js
+    ├── password.js
+    └── prisma.js
 
-- App Router pages and nested layouts define the route structure.
-- React Server Components are the default.
-- Server Actions handle authentication and mutations.
-- Authentication is stored in HTTP-only cookies instead of localStorage.
-- Server-side layouts enforce employee, employer, and admin access.
-- Server-side data access lives in `src/lib`.
-- URL search parameters drive public and applied-job filtering.
-- Tailwind CSS 4 provides styling without a legacy Tailwind config.
-- Redux, Axios, React Router, CRACO, and copied CRA feature/service/slice layers are not used.
+prisma/
+└── schema.prisma
+```
 
 ## Environment
 
 Create `.env.local`:
 
 ```env
-API_URL=http://localhost:5000/api
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+SESSION_SECRET=generate-a-long-random-secret
 ```
+
+For Vercel, add the same two variables in **Project → Settings → Environment Variables**.
+
+## Database setup
+
+After creating a PostgreSQL database:
+
+```bash
+npm install
+npm run db:push
+```
+
+This creates the Stars Align tables from `prisma/schema.prisma`.
 
 ## Development
 
 ```bash
-npm install
 npm run dev
 ```
 
@@ -38,15 +73,13 @@ npm run lint
 npm run build
 ```
 
+## Vercel
 
-## CI/CD artifact
+Deploy this repository directly to Vercel. No Express deployment and no `API_URL` environment variable are required.
 
-Every push to `main` runs lint and a production build, then packages the Next.js standalone server as a GitHub Actions artifact.
+Required environment variables:
 
-The artifact contains the standalone runtime and static assets. After extraction, start it with:
+- `DATABASE_URL`
+- `SESSION_SECRET`
 
-```bash
-node server.js
-```
-
-Set `API_URL` in the deployment environment to the production Express API URL.
+Resume files are currently stored in PostgreSQL with the application record, capped at 5 MB per upload.

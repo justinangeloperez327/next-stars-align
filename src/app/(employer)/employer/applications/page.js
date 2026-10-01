@@ -1,11 +1,13 @@
 import Link from "next/link";
 
-import { api } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { getEmployerApplications } from "@/lib/data";
 
 export const metadata = { title: "Applications" };
 
 export default async function ApplicationsPage() {
-  const applications = await api("/applications");
+  const session = await requireRole("employer");
+  const applications = await getEmployerApplications(session.id);
 
   return (
     <>
@@ -13,12 +15,12 @@ export default async function ApplicationsPage() {
       <p className="muted mt-2">Review candidates across all your vacancies.</p>
       <div className="mt-8 grid gap-4">
         {applications.map((application) => (
-          <article className="panel flex flex-wrap items-center justify-between gap-4 rounded-2xl p-5" key={application._id}>
+          <article className="panel flex flex-wrap items-center justify-between gap-4 rounded-2xl p-5" key={application.id}>
             <div>
-              <h2 className="font-bold">{application.user?.email || "Candidate"}</h2>
-              <p className="muted mt-1 text-sm">{application.job?.title || "Job"} · {application.status}</p>
+              <h2 className="font-bold">{application.user.email}</h2>
+              <p className="muted mt-1 text-sm">{application.job.title} · {application.status}</p>
             </div>
-            <Link className="btn btn-secondary" href={`/employer/applications/${application._id}/view`}>Review</Link>
+            <Link className="btn btn-secondary" href={`/employer/applications/${application.id}/view`}>Review</Link>
           </article>
         ))}
       </div>

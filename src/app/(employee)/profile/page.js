@@ -7,17 +7,25 @@ import {
   updateExperienceAction,
   updateProfileAction,
 } from "@/app/actions";
-import { api } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { getEmployeeProfile } from "@/lib/data";
 
 export const metadata = { title: "Profile" };
 
+function dateValue(value) {
+  if (!value) return "";
+  return new Date(value).toISOString().slice(0, 10);
+}
+
 function DateField({ name, value }) {
-  return <input className="field" defaultValue={value || ""} name={name} type="date" />;
+  return <input className="field" defaultValue={dateValue(value)} name={name} type="date" />;
 }
 
 export default async function ProfilePage() {
-  const data = await api("/profile");
-  const profile = data.profile;
+  const session = await requireRole("employee");
+  const profile = await getEmployeeProfile(session.id);
+
+  if (!profile) return null;
 
   return (
     <div className="shell py-14">
@@ -37,11 +45,11 @@ export default async function ProfilePage() {
       <section className="mt-10">
         <h2 className="text-xl font-bold">Education</h2>
         <div className="mt-4 grid gap-4">
-          {profile.education?.map((item) => {
-            const update = updateEducationAction.bind(null, item._id);
-            const remove = deleteEducationAction.bind(null, item._id);
+          {profile.education.map((item) => {
+            const update = updateEducationAction.bind(null, item.id);
+            const remove = deleteEducationAction.bind(null, item.id);
             return (
-              <article className="panel rounded-2xl p-5" key={item._id}>
+              <article className="panel rounded-2xl p-5" key={item.id}>
                 <form action={update} className="grid gap-3 md:grid-cols-2">
                   <input className="field" defaultValue={item.school || ""} name="school" placeholder="School" required />
                   <input className="field" defaultValue={item.degree || ""} name="degree" placeholder="Degree" />
@@ -68,11 +76,11 @@ export default async function ProfilePage() {
       <section className="mt-10">
         <h2 className="text-xl font-bold">Experience</h2>
         <div className="mt-4 grid gap-4">
-          {profile.experience?.map((item) => {
-            const update = updateExperienceAction.bind(null, item._id);
-            const remove = deleteExperienceAction.bind(null, item._id);
+          {profile.experience.map((item) => {
+            const update = updateExperienceAction.bind(null, item.id);
+            const remove = deleteExperienceAction.bind(null, item.id);
             return (
-              <article className="panel rounded-2xl p-5" key={item._id}>
+              <article className="panel rounded-2xl p-5" key={item.id}>
                 <form action={update} className="grid gap-3 md:grid-cols-2">
                   <input className="field" defaultValue={item.title || ""} name="title" placeholder="Job title" required />
                   <input className="field" defaultValue={item.company || ""} name="company" placeholder="Company" required />

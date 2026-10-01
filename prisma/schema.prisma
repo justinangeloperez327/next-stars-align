@@ -1,0 +1,148 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+  runtime      = "nodejs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  employee
+  employer
+  admin
+}
+
+enum ApplicationStatus {
+  submitted
+  reviewed
+  accepted
+  rejected
+}
+
+model User {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  passwordHash    String
+  role            UserRole         @default(employee)
+  employeeProfile EmployeeProfile?
+  employerProfile EmployerProfile?
+  applications    Application[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model EmployeeProfile {
+  id         String       @id @default(cuid())
+  userId     String       @unique
+  firstName  String?
+  middleName String?
+  lastName   String?
+  skills     String[]     @default([])
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  education  Education[]
+  experience Experience[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model Education {
+  id        String          @id @default(cuid())
+  profileId String
+  school    String
+  degree    String?
+  startDate DateTime?
+  endDate   DateTime?
+  profile   EmployeeProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([profileId])
+}
+
+model Experience {
+  id        String          @id @default(cuid())
+  profileId String
+  title     String
+  company   String
+  startDate DateTime?
+  endDate   DateTime?
+  profile   EmployeeProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([profileId])
+}
+
+model Company {
+  id              String           @id @default(cuid())
+  name            String
+  website         String?
+  location        String
+  industry        String
+  size            String?
+  vision          String?
+  mission         String?
+  values          String?
+  employerProfile EmployerProfile?
+  jobs            Job[]
+  applications    Application[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model EmployerProfile {
+  id        String  @id @default(cuid())
+  userId    String  @unique
+  companyId String  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Job {
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  location     String
+  type         String
+  requirements String
+  experience   Int           @default(0)
+  education    String?
+  salary       String?
+  deadline     DateTime
+  available    Boolean       @default(true)
+  companyId    String
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([companyId])
+  @@index([deadline])
+}
+
+model Application {
+  id          String            @id @default(cuid())
+  jobId       String
+  companyId   String
+  userId      String
+  coverLetter String?
+  resumeName  String?
+  resumeMime  String?
+  resumeData  Bytes?
+  status      ApplicationStatus @default(submitted)
+  appliedAt   DateTime          @default(now())
+  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  company     Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([jobId, userId])
+  @@index([companyId])
+  @@index([userId])
+}

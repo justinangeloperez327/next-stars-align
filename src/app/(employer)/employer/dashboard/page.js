@@ -1,4 +1,5 @@
-import { api } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { getEmployerDashboard } from "@/lib/data";
 
 export const metadata = { title: "Employer dashboard" };
 
@@ -12,7 +13,8 @@ const cards = [
 ];
 
 export default async function EmployerDashboardPage() {
-  const dashboard = await api("/dashboard");
+  const session = await requireRole("employer");
+  const dashboard = await getEmployerDashboard(session.id);
 
   return (
     <>
@@ -22,7 +24,7 @@ export default async function EmployerDashboardPage() {
         {cards.map(([label, key]) => (
           <article className="panel rounded-2xl p-6" key={key}>
             <p className="muted text-sm">{label}</p>
-            <p className="mt-2 text-4xl font-black">{dashboard[key] ?? 0}</p>
+            <p className="mt-2 text-4xl font-black">{dashboard?.[key] ?? 0}</p>
           </article>
         ))}
       </div>

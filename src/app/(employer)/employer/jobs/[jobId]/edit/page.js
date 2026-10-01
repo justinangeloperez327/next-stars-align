@@ -2,20 +2,17 @@ import { notFound } from "next/navigation";
 
 import { updateJobAction } from "@/app/actions";
 import JobForm from "@/components/job-form";
-import { api, ApiError } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { getEmployerJob } from "@/lib/data";
 
 export const metadata = { title: "Edit job" };
 
 export default async function EditJobPage({ params }) {
+  const session = await requireRole("employer");
   const { jobId } = await params;
-  let job;
+  const job = await getEmployerJob(session.id, jobId);
 
-  try {
-    job = await api(`/jobs/${jobId}`);
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 404) notFound();
-    throw error;
-  }
+  if (!job) notFound();
 
   const action = updateJobAction.bind(null, jobId);
 

@@ -6,5 +6,6 @@ export default defineConfig([
   globalIgnores([
     ".next/**",
     "out/**",
+    "src/generated/prisma/**",
   ]),
 ]);

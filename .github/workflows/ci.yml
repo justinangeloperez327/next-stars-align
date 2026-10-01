@@ -16,6 +16,9 @@ jobs:
   build:
     name: Validate and package
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/stars_align
+      SESSION_SECRET: ci-only-stars-align-session-secret
 
     steps:
       - name: Checkout
@@ -30,13 +33,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate Prisma client
+        run: npm run db:generate
+
       - name: Lint
         run: npm run lint
 
       - name: Build standalone app
         run: npm run build
-        env:
-          API_URL: http://127.0.0.1:5000/api
 
       - name: Assemble deployment artifact
         shell: bash
@@ -63,15 +67,3 @@ jobs:
             next-stars-align-${{ github.sha }}.sha256
           if-no-files-found: error
           retention-days: 14
-
-      - name: Artifact summary
-        shell: bash
-        run: |
-          {
-            echo "### Deployment artifact"
-            echo ""
-            echo "- Commit: `${GITHUB_SHA}`"
-            echo "- Bundle: `next-stars-align-${GITHUB_SHA}.tar.gz`"
-            echo "- Runtime: Node.js 22"
-            echo "- Start command after extraction: `node server.js`"
-          } >> "$GITHUB_STEP_SUMMARY"

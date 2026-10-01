@@ -6,7 +6,7 @@ import Brand from "@/components/brand";
 
 export default async function SiteShell({ children }) {
   const session = await getSession();
-  const employee = session?.user?.role === "employee";
+  const employee = session?.role === "employee";
 
   return (
     <div className="min-h-screen">
@@ -38,7 +38,7 @@ export default async function SiteShell({ children }) {
       <footer className="mt-20 border-t border-white/10 py-8">
         <div className="shell flex flex-wrap items-center justify-between gap-3 text-sm text-white/55">
           <span>Stars Align</span>
-          <span>Jobs and hiring, without the clutter.</span>
+          <span>Full-stack Next.js job platform.</span>
         </div>
       </footer>
     </div>

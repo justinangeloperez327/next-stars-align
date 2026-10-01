@@ -1,18 +1,14 @@
 import JobCard from "@/components/job-card";
 import JobFilters from "@/components/job-filters";
-import { api } from "@/lib/api";
+import { requireRole } from "@/lib/auth";
+import { listAppliedJobs } from "@/lib/data";
 
 export const metadata = { title: "Applied jobs" };
 
 export default async function AppliedJobsPage({ searchParams }) {
+  const session = await requireRole("employee");
   const params = await searchParams;
-  const query = new URLSearchParams();
-
-  for (const key of ["search", "location", "type", "dateListed"]) {
-    if (params?.[key]) query.set(key, params[key]);
-  }
-
-  const jobs = await api(`/jobs/applied-jobs?${query.toString()}`);
+  const jobs = await listAppliedJobs(session.id, params);
 
   return (
     <div className="shell py-14">
@@ -20,7 +16,13 @@ export default async function AppliedJobsPage({ searchParams }) {
       <p className="muted mt-2">Track every role you have applied for.</p>
       <div className="mt-8"><JobFilters values={params} /></div>
       <div className="mt-6 grid gap-4">
-        {jobs.length ? jobs.map((job) => <JobCard job={job} key={job._id} status={job.status} />) : (
+        {jobs.length ? jobs.map((job) => (
+          <JobCard
+            job={{ ...job, _id: job.id }}
+            key={job.id}
+            status={job.status}
+          />
+        )) : (
           <div className="panel rounded-2xl p-10 text-center">
             <h2 className="text-xl font-bold">No applications yet</h2>
             <p className="muted mt-2">Your applied roles will appear here.</p>
