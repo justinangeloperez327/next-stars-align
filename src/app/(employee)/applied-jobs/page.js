@@ -1,9 +1,20 @@
+import Link from "next/link";
+
+import EmptyState from "@/components/empty-state";
 import JobCard from "@/components/job-card";
-import JobFilters from "@/components/job-filters";
+import PageHeader from "@/components/page-header";
 import { requireRole } from "@/lib/auth";
 import { listAppliedJobs } from "@/lib/data";
 
 export const metadata = { title: "Applied jobs" };
+
+const tabs = [
+  ["", "All"],
+  ["submitted", "Submitted"],
+  ["reviewed", "Reviewed"],
+  ["accepted", "Accepted"],
+  ["rejected", "Rejected"],
+];
 
 export default async function AppliedJobsPage({ searchParams }) {
   const session = await requireRole("employee");
@@ -11,24 +22,36 @@ export default async function AppliedJobsPage({ searchParams }) {
   const jobs = await listAppliedJobs(session.id, params);
 
   return (
-    <div className="shell py-14">
-      <h1 className="text-3xl font-black">Applied jobs</h1>
-      <p className="muted mt-2">Track every role you have applied for.</p>
-      <div className="mt-8"><JobFilters values={params} /></div>
-      <div className="mt-6 grid gap-4">
-        {jobs.length ? jobs.map((job) => (
-          <JobCard
-            job={{ ...job, _id: job.id }}
-            key={job.id}
-            status={job.status}
+    <div className="shell py-14 sm:py-20">
+      <PageHeader
+        eyebrow="Candidate workspace"
+        title="Applied jobs"
+        description="Track the roles you have applied for and their current status."
+      />
+
+      <nav className="segmented-control mt-7" aria-label="Application status">
+        {tabs.map(([value, label]) => {
+          const active = (params.status || "") === value;
+          const href = value ? "/applied-jobs?status=" + value : "/applied-jobs";
+          return <Link className={active ? "segment-active" : "segment"} href={href} key={label}>{label}</Link>;
+        })}
+      </nav>
+
+      {jobs.length ? (
+        <div className="mt-6 grid gap-3">
+          {jobs.map((job) => (
+            <JobCard job={{ ...job, _id: job.id }} key={job.id} status={job.status} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-6">
+          <EmptyState
+            title="No applications here"
+            description="Applications matching this status will appear here when available."
+            action={<Link className="btn btn-primary" href="/">Browse jobs</Link>}
           />
-        )) : (
-          <div className="panel rounded-2xl p-10 text-center">
-            <h2 className="text-xl font-bold">No applications yet</h2>
-            <p className="muted mt-2">Your applied roles will appear here.</p>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
 import { acceptApplicationAction, rejectApplicationAction } from "@/app/actions";
+import PageHeader from "@/components/page-header";
+import StatusBadge from "@/components/status-badge";
 import { requireRole } from "@/lib/auth";
 import { getEmployerApplication } from "@/lib/data";
 import { formatDate } from "@/lib/format";
@@ -14,28 +16,81 @@ export default async function ApplicationViewPage({ params }) {
 
   const accept = acceptApplicationAction.bind(null, applicationId);
   const reject = rejectApplicationAction.bind(null, applicationId);
+  const profile = application.user.employeeProfile;
+  const name = [profile?.firstName, profile?.middleName, profile?.lastName].filter(Boolean).join(" ") || application.user.email;
 
   return (
-    <article className="panel max-w-4xl rounded-3xl p-7 sm:p-9">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-violet-300">Candidate application</p>
-      <h1 className="mt-3 text-3xl font-black">{application.user.email}</h1>
-      <p className="muted mt-2">{application.job.title} · submitted {formatDate(application.createdAt)}</p>
+    <>
+      <PageHeader
+        eyebrow="Candidate application"
+        title={name}
+        description={application.job.title + " · submitted " + formatDate(application.createdAt)}
+      />
 
-      <section className="mt-8">
-        <h2 className="font-bold">Cover letter</h2>
-        <p className="muted mt-3 whitespace-pre-line leading-7">{application.coverLetter || "No cover letter provided."}</p>
-      </section>
+      <div className="mt-8 grid gap-6 xl:grid-cols-[1fr_320px]">
+        <div className="grid gap-6">
+          <section className="surface rounded-[1.4rem] p-6">
+            <p className="info-label">Candidate</p>
+            <p className="mt-3 font-bold">{application.user.email}</p>
+            {profile?.skills?.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-2">{profile.skills.map((skill) => <span className="meta-chip" key={skill}>{skill}</span>)}</div>
+            )}
+          </section>
 
-      {application.resumeName && (
-        <a className="btn btn-secondary mt-7" href={`/resumes/${application.id}`} target="_blank">
-          Open resume ↗
-        </a>
-      )}
+          <section className="panel rounded-[1.4rem] p-6">
+            <p className="info-label">Cover letter</p>
+            <p className="muted mt-3 whitespace-pre-line leading-7">{application.coverLetter || "No cover letter provided."}</p>
+          </section>
 
-      <div className="mt-8 flex flex-wrap gap-3">
-        <form action={accept}><button className="btn bg-emerald-700 text-white" type="submit">Accept</button></form>
-        <form action={reject}><button className="btn btn-danger" type="submit">Reject</button></form>
+          {profile?.experience?.length > 0 && (
+            <section className="surface rounded-[1.4rem] p-6">
+              <p className="info-label">Experience</p>
+              <div className="mt-4 grid gap-4">
+                {profile.experience.map((item) => (
+                  <div className="info-block" key={item.id}>
+                    <p className="font-bold">{item.title}</p>
+                    <p className="muted mt-1 text-sm">{item.company}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {profile?.education?.length > 0 && (
+            <section className="surface rounded-[1.4rem] p-6">
+              <p className="info-label">Education</p>
+              <div className="mt-4 grid gap-4">
+                {profile.education.map((item) => (
+                  <div className="info-block" key={item.id}>
+                    <p className="font-bold">{item.school}</p>
+                    <p className="muted mt-1 text-sm">{item.degree || "Degree not specified"}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        <aside className="application-sidebar">
+          <div className="glass-strong rounded-[1.4rem] p-5">
+            <p className="info-label">Application status</p>
+            <div className="mt-3"><StatusBadge status={application.status} /></div>
+            <dl className="mt-6 grid gap-4 text-sm">
+              <div><dt className="muted">Applied</dt><dd className="mt-1 font-bold">{formatDate(application.createdAt)}</dd></div>
+              <div><dt className="muted">Role</dt><dd className="mt-1 font-bold">{application.job.title}</dd></div>
+            </dl>
+
+            {application.resumeName && (
+              <a className="btn btn-secondary mt-6 w-full" href={"/resumes/" + application.id} target="_blank">Open resume ↗</a>
+            )}
+
+            <div className="mt-6 grid gap-2 border-t border-white/8 pt-5">
+              <form action={accept}><button className="btn btn-primary w-full" type="submit">Accept candidate</button></form>
+              <form action={reject}><button className="btn btn-danger w-full" type="submit">Reject application</button></form>
+            </div>
+          </div>
+        </aside>
       </div>
-    </article>
+    </>
   );
 }
