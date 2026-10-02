@@ -993,3 +993,98 @@ select.field {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Calm professional typography */
+body {
+  font-size: 0.9375rem;
+  line-height: 1.62;
+  letter-spacing: -0.005em;
+}
+
+.hero-title {
+  max-width: 13ch;
+  font-size: clamp(2.75rem, 6vw, 5.15rem);
+  font-weight: 650;
+  letter-spacing: -0.047em;
+  line-height: 0.98;
+}
+
+.page-title {
+  max-width: 20ch;
+  font-size: clamp(1.95rem, 4vw, 3rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.section-title {
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.info-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.nav-link,
+.sidebar-link {
+  font-weight: 550;
+}
+
+.btn {
+  font-weight: 600;
+}
+
+.meta-chip,
+.status-badge,
+.segment,
+.segment-active {
+  font-weight: 550;
+}
+
+.table-head {
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+
+.company-avatar {
+  font-weight: 650;
+}
+
+.dashboard-card {
+  min-height: 8.25rem;
+}
+
+.glass-strong {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 20px 55px rgba(0,0,0,0.28);
+}
+
+.panel {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 14px 36px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 720px) {
+  .hero-title {
+    font-size: clamp(2.65rem, 13vw, 4rem);
+  }
+}

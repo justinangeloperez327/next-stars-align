@@ -2,10 +2,10 @@ const jobTypes = ["full-time", "part-time", "contract", "temporary", "internship
 
 export default function JobForm({ action, job = {}, submitLabel = "Save job" }) {
   return (
-    <form action={action} className="grid gap-6">
-      <section className="surface rounded-[1.4rem] p-5 sm:p-7">
+    <form action={action} className="grid gap-5">
+      <section className="surface rounded-[1.2rem] p-5 sm:p-6">
         <p className="info-label">Basic information</p>
-        <h2 className="mt-2 text-xl font-extrabold">Role details</h2>
+        <h2 className="mt-2 text-lg font-semibold">Role details</h2>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <label className="grid gap-2"><span className="form-label">Title</span><input className="field" defaultValue={job.title || ""} name="title" required /></label>
           <label className="grid gap-2"><span className="form-label">Location</span><input className="field" defaultValue={job.location || ""} name="location" required /></label>
@@ -14,7 +14,7 @@ export default function JobForm({ action, job = {}, submitLabel = "Save job" }) 
         </div>
       </section>
 
-      <section className="surface rounded-[1.4rem] p-5 sm:p-7">
+      <section className="surface rounded-[1.2rem] p-5 sm:p-6">
         <p className="info-label">Role description</p>
         <div className="mt-5 grid gap-5">
           <label className="grid gap-2"><span className="form-label">Description</span><textarea className="field min-h-40 resize-y" defaultValue={job.description || ""} name="description" required /></label>
@@ -22,7 +22,7 @@ export default function JobForm({ action, job = {}, submitLabel = "Save job" }) 
         </div>
       </section>
 
-      <section className="surface rounded-[1.4rem] p-5 sm:p-7">
+      <section className="surface rounded-[1.2rem] p-5 sm:p-6">
         <p className="info-label">Candidate requirements</p>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <label className="grid gap-2"><span className="form-label">Experience (years)</span><input className="field" defaultValue={job.experience ?? 0} min="0" name="experience" type="number" /></label>
@@ -30,7 +30,7 @@ export default function JobForm({ action, job = {}, submitLabel = "Save job" }) 
         </div>
       </section>
 
-      <section className="surface rounded-[1.4rem] p-5 sm:p-7">
+      <section className="surface rounded-[1.2rem] p-5 sm:p-6">
         <p className="info-label">Application settings</p>
         <label className="mt-5 grid gap-2"><span className="form-label">Application deadline</span><input className="field" defaultValue={job.deadline?.slice?.(0, 10) || job.deadline || ""} name="deadline" required type="date" /></label>
       </section>
