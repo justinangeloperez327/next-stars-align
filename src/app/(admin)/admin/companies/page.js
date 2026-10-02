@@ -17,11 +17,11 @@ export default async function AdminCompaniesPage() {
           <div className="table-head"><span>Company</span><span>Industry</span><span>Jobs</span><span>Applications</span><span /></div>
           {companies.map((company) => (
             <div className="table-row" key={company.id}>
-              <div><p className="font-bold">{company.name}</p><p className="muted mt-1 text-xs">{company.location}</p></div>
+              <div><p className="font-medium">{company.name}</p><p className="muted mt-1 text-xs">{company.location}</p></div>
               <span className="text-sm">{company.industry}</span>
               <span className="text-sm">{company._count.jobs}</span>
               <span className="text-sm">{company._count.applications}</span>
-              <Link className="text-sm font-bold text-violet-300" href={"/companies/" + company.id}>View →</Link>
+              <Link className="text-sm font-medium text-violet-300" href={"/companies/" + company.id}>View →</Link>
             </div>
           ))}
         </div>

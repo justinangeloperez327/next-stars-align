@@ -17,7 +17,7 @@ export default async function AdminApplicationsPage() {
           <div className="table-head"><span>Candidate</span><span>Company</span><span>Role</span><span>Status</span><span>Applied</span></div>
           {applications.map((application) => (
             <div className="table-row" key={application.id}>
-              <span className="font-bold">{application.user.email}</span>
+              <span className="font-medium">{application.user.email}</span>
               <span className="text-sm">{application.company.name}</span>
               <span className="text-sm">{application.job.title}</span>
               <StatusBadge status={application.status} />

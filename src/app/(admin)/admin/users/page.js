@@ -20,7 +20,7 @@ export default async function AdminUsersPage() {
             const organization = user.employerProfile?.company?.name || "—";
             return (
               <div className="table-row" key={user.id}>
-                <div><p className="font-bold">{name}</p><p className="muted mt-1 text-xs">{user.email}</p></div>
+                <div><p className="font-medium">{name}</p><p className="muted mt-1 text-xs">{user.email}</p></div>
                 <StatusBadge status={user.role} />
                 <span className="text-sm">{organization}</span>
                 <span className="muted text-sm">{formatDate(user.createdAt)}</span>

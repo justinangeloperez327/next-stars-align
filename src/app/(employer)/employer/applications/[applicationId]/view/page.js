@@ -31,7 +31,7 @@ export default async function ApplicationViewPage({ params }) {
         <div className="grid gap-6">
           <section className="surface rounded-[1.4rem] p-6">
             <p className="info-label">Candidate</p>
-            <p className="mt-3 font-bold">{application.user.email}</p>
+            <p className="mt-3 font-medium">{application.user.email}</p>
             {profile?.skills?.length > 0 && (
               <div className="mt-5 flex flex-wrap gap-2">{profile.skills.map((skill) => <span className="meta-chip" key={skill}>{skill}</span>)}</div>
             )}
@@ -48,7 +48,7 @@ export default async function ApplicationViewPage({ params }) {
               <div className="mt-4 grid gap-4">
                 {profile.experience.map((item) => (
                   <div className="info-block" key={item.id}>
-                    <p className="font-bold">{item.title}</p>
+                    <p className="font-medium">{item.title}</p>
                     <p className="muted mt-1 text-sm">{item.company}</p>
                   </div>
                 ))}
@@ -62,7 +62,7 @@ export default async function ApplicationViewPage({ params }) {
               <div className="mt-4 grid gap-4">
                 {profile.education.map((item) => (
                   <div className="info-block" key={item.id}>
-                    <p className="font-bold">{item.school}</p>
+                    <p className="font-medium">{item.school}</p>
                     <p className="muted mt-1 text-sm">{item.degree || "Degree not specified"}</p>
                   </div>
                 ))}
@@ -76,8 +76,8 @@ export default async function ApplicationViewPage({ params }) {
             <p className="info-label">Application status</p>
             <div className="mt-3"><StatusBadge status={application.status} /></div>
             <dl className="mt-6 grid gap-4 text-sm">
-              <div><dt className="muted">Applied</dt><dd className="mt-1 font-bold">{formatDate(application.createdAt)}</dd></div>
-              <div><dt className="muted">Role</dt><dd className="mt-1 font-bold">{application.job.title}</dd></div>
+              <div><dt className="muted">Applied</dt><dd className="mt-1 font-medium">{formatDate(application.createdAt)}</dd></div>
+              <div><dt className="muted">Role</dt><dd className="mt-1 font-medium">{application.job.title}</dd></div>
             </dl>
 
             {application.resumeName && (

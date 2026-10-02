@@ -52,11 +52,11 @@ export default async function ApplicationsPage({ searchParams }) {
 
             return (
               <div className="table-row" key={application.id}>
-                <div><p className="font-bold">{name}</p><p className="muted mt-1 text-xs">{application.user.email}</p></div>
+                <div><p className="font-medium">{name}</p><p className="muted mt-1 text-xs">{application.user.email}</p></div>
                 <span className="text-sm">{application.job.title}</span>
                 <StatusBadge status={application.status} />
                 <span className="muted text-sm">{formatDate(application.createdAt)}</span>
-                <Link className="text-sm font-bold text-violet-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
+                <Link className="text-sm font-medium text-violet-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
               </div>
             );
           })}
