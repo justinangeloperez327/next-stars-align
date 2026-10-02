@@ -24,13 +24,13 @@ export default async function CompaniesPage() {
               <div className="flex items-start gap-4">
                 <div className="company-avatar" aria-hidden="true">{company.name.charAt(0).toUpperCase()}</div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-xl font-extrabold tracking-[-0.02em]">{company.name}</h2>
+                  <h2 className="text-xl font-semibold tracking-[-0.02em]">{company.name}</h2>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <span className="meta-chip">{company.industry}</span>
                     <span className="meta-chip">{company.location}</span>
                     <span className="meta-chip">{company._count.jobs} jobs</span>
                   </div>
-                  <Link className="mt-5 inline-flex font-bold text-violet-300 hover:text-violet-200" href={"/companies/" + company.id}>
+                  <Link className="mt-5 inline-flex font-medium text-violet-300 hover:text-violet-200" href={"/companies/" + company.id}>
                     View company →
                   </Link>
                 </div>

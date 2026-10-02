@@ -16,10 +16,10 @@ export default async function JobDetailsPage({ params }) {
     <div className="shell py-14 sm:py-20">
       <div className="job-detail-layout">
         <article className="glass-strong rounded-[2rem] p-7 sm:p-10">
-          <Link className="text-sm font-bold text-violet-300" href={"/companies/" + job.companyId}>
+          <Link className="text-sm font-medium text-violet-300" href={"/companies/" + job.companyId}>
             {job.company?.name || "Company"}
           </Link>
-          <h1 className="mt-3 text-4xl font-black tracking-[-0.05em] sm:text-5xl">{job.title}</h1>
+          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.05em] sm:text-3xl">{job.title}</h1>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <span className="meta-chip">{job.location}</span>
@@ -38,8 +38,8 @@ export default async function JobDetailsPage({ params }) {
               <p className="muted mt-3 whitespace-pre-line leading-8">{job.requirements}</p>
             </section>
             <section className="grid gap-4 sm:grid-cols-2">
-              <div className="info-block"><p className="info-label">Experience</p><p className="mt-2 font-bold">{job.experience ?? 0} years</p></div>
-              <div className="info-block"><p className="info-label">Education</p><p className="mt-2 font-bold">{job.education || "Not specified"}</p></div>
+              <div className="info-block"><p className="info-label">Experience</p><p className="mt-2 font-medium">{job.experience ?? 0} years</p></div>
+              <div className="info-block"><p className="info-label">Education</p><p className="mt-2 font-medium">{job.education || "Not specified"}</p></div>
             </section>
           </div>
         </article>

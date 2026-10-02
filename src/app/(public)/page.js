@@ -27,19 +27,19 @@ export default async function HomePage({ searchParams }) {
         <div className="hero-visual glass" aria-hidden="true">
           <div className="hero-card-stack">
             <div className="hero-card glass-strong">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/45">Search</p>
-              <p className="mt-2 text-lg font-extrabold">Find roles with less friction</p>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/45">Search</p>
+              <p className="mt-2 text-lg font-semibold">Find roles with less friction</p>
             </div>
             <div className="hero-card glass-strong">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-violet-300">Apply</p>
-              <p className="mt-2 text-xl font-extrabold">Keep every opportunity in view</p>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-violet-300">Apply</p>
+              <p className="mt-2 text-xl font-semibold">Keep every opportunity in view</p>
               <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
                 <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-violet-500 to-sky-400" />
               </div>
             </div>
             <div className="hero-card glass-strong">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/45">Grow</p>
-              <p className="mt-2 text-lg font-extrabold">Move toward the right work</p>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/45">Grow</p>
+              <p className="mt-2 text-lg font-semibold">Move toward the right work</p>
             </div>
           </div>
         </div>

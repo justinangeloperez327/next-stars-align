@@ -17,7 +17,7 @@ export default async function RegisterEmployerPage({ searchParams }) {
   return (
     <section className="glass-strong rounded-[1.7rem] p-6 sm:p-9">
       <p className="eyebrow">Employer workspace</p>
-      <h1 className="mt-3 text-3xl font-extrabold tracking-[-0.04em]">Create your company account</h1>
+      <h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Create your company account</h1>
       <p className="muted mt-2">Set up the essentials now. You can refine your company profile later.</p>
       {params?.error && <p className="mt-5 rounded-xl border border-red-400/20 bg-red-500/10 p-3 text-sm text-red-200">{params.error}</p>}
       <form action={registerEmployerAction} className="mt-7 grid gap-5">
@@ -45,7 +45,7 @@ export default async function RegisterEmployerPage({ searchParams }) {
         ))}
         <button className="btn btn-primary mt-1" type="submit">Create employer account</button>
       </form>
-      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">Looking for work? <Link className="font-bold text-violet-300 hover:text-violet-200" href="/register">Register as an employee</Link>.</p>
+      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">Looking for work? <Link className="font-medium text-violet-300 hover:text-violet-200" href="/register">Register as an employee</Link>.</p>
     </section>
   );
 }

@@ -16,7 +16,7 @@ export default function AboutPage() {
             ["Calm", "Visual depth without sacrificing contrast or readability."],
           ].map(([title, copy]) => (
             <div className="rounded-2xl border border-white/8 bg-black/15 p-5" key={title}>
-              <h2 className="font-extrabold">{title}</h2>
+              <h2 className="font-semibold">{title}</h2>
               <p className="muted mt-2 text-sm leading-6">{copy}</p>
             </div>
           ))}
