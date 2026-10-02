@@ -16,7 +16,7 @@ export default async function JobDetailsPage({ params }) {
     <div className="shell py-14 sm:py-20">
       <div className="job-detail-layout">
         <article className="glass-strong rounded-[2rem] p-7 sm:p-10">
-          <Link className="text-sm font-medium text-violet-300" href={"/companies/" + job.companyId}>
+          <Link className="text-sm font-medium text-sky-300" href={"/companies/" + job.companyId}>
             {job.company?.name || "Company"}
           </Link>
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.05em] sm:text-3xl">{job.title}</h1>

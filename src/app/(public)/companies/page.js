@@ -30,7 +30,7 @@ export default async function CompaniesPage() {
                     <span className="meta-chip">{company.location}</span>
                     <span className="meta-chip">{company._count.jobs} jobs</span>
                   </div>
-                  <Link className="mt-5 inline-flex font-medium text-violet-300 hover:text-violet-200" href={"/companies/" + company.id}>
+                  <Link className="mt-5 inline-flex font-medium text-sky-300 hover:text-sky-200" href={"/companies/" + company.id}>
                     View company →
                   </Link>
                 </div>

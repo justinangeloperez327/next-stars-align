@@ -37,7 +37,7 @@ export default async function AdminDashboardPage() {
 
       <div className="mt-8 grid gap-6 xl:grid-cols-2">
         <section className="surface rounded-[1.4rem] p-6">
-          <div className="section-heading"><div><p className="info-label">Recent activity</p><h2 className="mt-2 text-xl font-semibold">New users</h2></div><Link className="text-sm font-medium text-violet-300" href="/admin/users">View users →</Link></div>
+          <div className="section-heading"><div><p className="info-label">Recent activity</p><h2 className="mt-2 text-xl font-semibold">New users</h2></div><Link className="text-sm font-medium text-sky-300" href="/admin/users">View users →</Link></div>
           <div className="mt-5 data-list">
             {dashboard.recentUsers.map((user) => (
               <div className="data-row" key={user.id}><div><p className="font-medium">{user.email}</p><p className="muted mt-1 text-xs">{formatDate(user.createdAt)}</p></div><StatusBadge status={user.role} /></div>
@@ -46,7 +46,7 @@ export default async function AdminDashboardPage() {
         </section>
 
         <section className="surface rounded-[1.4rem] p-6">
-          <div className="section-heading"><div><p className="info-label">Recent activity</p><h2 className="mt-2 text-xl font-semibold">New jobs</h2></div><Link className="text-sm font-medium text-violet-300" href="/admin/jobs">View jobs →</Link></div>
+          <div className="section-heading"><div><p className="info-label">Recent activity</p><h2 className="mt-2 text-xl font-semibold">New jobs</h2></div><Link className="text-sm font-medium text-sky-300" href="/admin/jobs">View jobs →</Link></div>
           <div className="mt-5 data-list">
             {dashboard.recentJobs.map((job) => (
               <div className="data-row" key={job.id}><div><p className="font-medium">{job.title}</p><p className="muted mt-1 text-xs">{job.company.name}</p></div><span className="muted text-sm">{formatDate(job.createdAt)}</span></div>

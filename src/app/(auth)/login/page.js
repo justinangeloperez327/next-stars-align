@@ -24,7 +24,7 @@ export default async function LoginPage({ searchParams }) {
         </label>
         <button className="btn btn-primary mt-1" type="submit">Login</button>
       </form>
-      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">New here? <Link className="font-medium text-violet-300 hover:text-violet-200" href="/register">Create an employee account</Link>.</p>
+      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">New here? <Link className="font-medium text-sky-300 hover:text-sky-200" href="/register">Create an employee account</Link>.</p>
     </section>
   );
 }

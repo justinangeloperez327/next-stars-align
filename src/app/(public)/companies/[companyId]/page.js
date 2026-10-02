@@ -27,7 +27,7 @@ export default async function CompanyPage({ params }) {
               {company.size && <span className="meta-chip">{company.size}</span>}
             </div>
             {company.website && (
-              <a className="mt-5 inline-flex font-medium text-violet-300" href={company.website} target="_blank" rel="noreferrer">
+              <a className="mt-5 inline-flex font-medium text-sky-300" href={company.website} target="_blank" rel="noreferrer">
                 Visit website ↗
               </a>
             )}
@@ -49,7 +49,7 @@ export default async function CompanyPage({ params }) {
             <p className="eyebrow">Opportunities</p>
             <h2 className="section-title mt-2">Open roles</h2>
           </div>
-          <Link className="text-sm font-medium text-violet-300" href="/">Browse all jobs →</Link>
+          <Link className="text-sm font-medium text-sky-300" href="/">Browse all jobs →</Link>
         </div>
 
         {company.jobs.length ? (

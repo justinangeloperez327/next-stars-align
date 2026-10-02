@@ -45,7 +45,7 @@ export default async function RegisterEmployerPage({ searchParams }) {
         ))}
         <button className="btn btn-primary mt-1" type="submit">Create employer account</button>
       </form>
-      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">Looking for work? <Link className="font-medium text-violet-300 hover:text-violet-200" href="/register">Register as an employee</Link>.</p>
+      <p className="muted mt-6 border-t border-white/8 pt-5 text-sm">Looking for work? <Link className="font-medium text-sky-300 hover:text-sky-200" href="/register">Register as an employee</Link>.</p>
     </section>
   );
 }

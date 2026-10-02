@@ -21,7 +21,7 @@ export default async function AdminCompaniesPage() {
               <span className="text-sm">{company.industry}</span>
               <span className="text-sm">{company._count.jobs}</span>
               <span className="text-sm">{company._count.applications}</span>
-              <Link className="text-sm font-medium text-violet-300" href={"/companies/" + company.id}>View →</Link>
+              <Link className="text-sm font-medium text-sky-300" href={"/companies/" + company.id}>View →</Link>
             </div>
           ))}
         </div>
