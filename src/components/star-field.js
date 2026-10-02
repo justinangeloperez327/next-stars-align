@@ -17,64 +17,49 @@ export default function StarField() {
 
     syncPreference();
     media.addEventListener("change", syncPreference);
-
     return () => media.removeEventListener("change", syncPreference);
   }, []);
 
   const options = useMemo(
     () => ({
-      fullScreen: {
-        enable: false,
-      },
-      background: {
-        color: {
-          value: "transparent",
-        },
-      },
-      fpsLimit: 45,
+      fullScreen: { enable: false },
+      background: { color: { value: "transparent" } },
+      fpsLimit: 40,
       detectRetina: true,
       pauseOnBlur: true,
       interactivity: {
         events: {
-          onClick: {
-            enable: false,
-          },
-          onHover: {
-            enable: false,
-          },
-          resize: {
-            enable: true,
-          },
+          onClick: { enable: false },
+          onHover: { enable: false },
+          resize: { enable: true },
         },
       },
       particles: {
         color: {
-          value: ["#ffffff", "#c4b5fd", "#7dd3fc"],
+          value: ["#F8FAFC", "#BAE6FD", "#67E8F9"],
         },
         links: {
           enable: true,
-          color: "#a8b4d6",
-          distance: 145,
-          opacity: 0.09,
-          width: 0.6,
+          color: "#7DD3FC",
+          distance: 138,
+          opacity: 0.065,
+          width: 0.55,
         },
         move: {
           enable: !reduceMotion,
-          speed: 0.16,
+          speed: 0.1,
           direction: "none",
           random: true,
           straight: false,
-          outModes: {
-            default: "out",
-          },
+          outModes: { default: "out" },
         },
         number: {
-          value: 26,
+          value: 28,
         },
         opacity: {
           value: {
-            min: 0.18,
-            max: 0.52,
+            min: 0.16,
+            max: 0.44,
           },
         },
         shape: {
@@ -82,8 +67,8 @@ export default function StarField() {
         },
         size: {
           value: {
-            min: 0.7,
-            max: 1.9,
+            min: 0.6,
+            max: 1.55,
           },
         },
       },

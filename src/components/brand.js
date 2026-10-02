@@ -6,7 +6,7 @@ export default function Brand() {
       <span className="brand-mark" aria-hidden="true">✦</span>
       <span className="text-[0.9rem] font-semibold tracking-[0.1em]">
         <span className="text-white">STARS</span>
-        <span className="text-violet-300">ALIGN</span>
+        <span className="text-sky-300">ALIGN</span>
       </span>
     </Link>
   );

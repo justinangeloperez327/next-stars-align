@@ -13,7 +13,7 @@ export default function JobCard({ job, status }) {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-violet-300">{companyName}</p>
+              <p className="truncate text-sm font-medium text-sky-300">{companyName}</p>
               <h2 className="mt-1 text-lg font-semibold tracking-[-0.015em] text-white">{job.title}</h2>
             </div>
             {status && <span className="meta-chip uppercase">{status}</span>}
@@ -26,7 +26,7 @@ export default function JobCard({ job, status }) {
             {job.createdAt && <span className="meta-chip">{timeAgo(job.createdAt)}</span>}
           </div>
 
-          <Link className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-violet-300 hover:text-violet-200" href={`/jobs/${job._id}/details`}>
+          <Link className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sky-300 hover:text-sky-200" href={`/jobs/${job._id}/details`}>
             View role <span aria-hidden="true">→</span>
           </Link>
         </div>
