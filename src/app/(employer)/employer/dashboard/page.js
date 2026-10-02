@@ -33,7 +33,7 @@ export default async function EmployerDashboardPage() {
         {metrics.map(([label, key]) => (
           <article className="dashboard-card panel rounded-[1.35rem] p-6" key={key}>
             <p className="text-sm font-semibold text-white/55">{label}</p>
-            <p className="mt-4 text-4xl font-black tracking-[-0.05em]">{dashboard?.[key] ?? 0}</p>
+            <p className="mt-4 text-xl font-semibold tracking-[-0.05em]">{dashboard?.[key] ?? 0}</p>
           </article>
         ))}
       </div>
@@ -41,8 +41,8 @@ export default async function EmployerDashboardPage() {
       <div className="mt-8 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <section className="surface rounded-[1.4rem] p-5 sm:p-6">
           <div className="section-heading">
-            <div><p className="info-label">Candidate activity</p><h2 className="mt-2 text-xl font-extrabold">Recent applications</h2></div>
-            <Link className="text-sm font-bold text-violet-300" href="/employer/applications">View all →</Link>
+            <div><p className="info-label">Candidate activity</p><h2 className="mt-2 text-xl font-semibold">Recent applications</h2></div>
+            <Link className="text-sm font-medium text-violet-300" href="/employer/applications">View all →</Link>
           </div>
 
           {dashboard?.recentApplications?.length ? (
@@ -53,7 +53,7 @@ export default async function EmployerDashboardPage() {
                 return (
                   <Link className="data-row" href={"/employer/applications/" + application.id + "/view"} key={application.id}>
                     <div className="min-w-0">
-                      <p className="truncate font-bold">{name}</p>
+                      <p className="truncate font-medium">{name}</p>
                       <p className="muted mt-1 truncate text-sm">{application.job.title}</p>
                     </div>
                     <StatusBadge status={application.status} />
@@ -68,12 +68,12 @@ export default async function EmployerDashboardPage() {
 
         <section className="surface rounded-[1.4rem] p-5 sm:p-6">
           <p className="info-label">Needs attention</p>
-          <h2 className="mt-2 text-xl font-extrabold">Closing soon</h2>
+          <h2 className="mt-2 text-xl font-semibold">Closing soon</h2>
           {dashboard?.closingSoon?.length ? (
             <div className="mt-5 grid gap-3">
               {dashboard.closingSoon.map((job) => (
                 <Link className="attention-card" href={"/employer/jobs/" + job.id + "/edit"} key={job.id}>
-                  <p className="font-bold">{job.title}</p>
+                  <p className="font-medium">{job.title}</p>
                   <p className="muted mt-1 text-sm">Deadline {formatDate(job.deadline)} · {job._count.applications} applications</p>
                 </Link>
               ))}

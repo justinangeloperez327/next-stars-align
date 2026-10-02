@@ -56,7 +56,7 @@ export default async function ProfilePage() {
       <section className="profile-overview panel mt-7">
         <div>
           <p className="info-label">Profile completion</p>
-          <p className="mt-2 text-3xl font-black">{completion}%</p>
+          <p className="mt-2 text-xl font-semibold">{completion}%</p>
         </div>
         <div className="completion-track">
           <div className="completion-fill" style={{ width: completion + "%" }} />
@@ -67,7 +67,7 @@ export default async function ProfilePage() {
         <div className="section-heading">
           <div>
             <p className="info-label">Personal information</p>
-            <h2 className="mt-2 text-xl font-extrabold">Basic details</h2>
+            <h2 className="mt-2 text-xl font-semibold">Basic details</h2>
           </div>
         </div>
         <form action={updateProfileAction} className="mt-5 grid gap-4 md:grid-cols-3">
@@ -87,7 +87,7 @@ export default async function ProfilePage() {
 
       <section className="mt-10">
         <p className="info-label">Experience</p>
-        <h2 className="mt-2 text-2xl font-extrabold">Work history</h2>
+        <h2 className="mt-2 text-xl font-semibold">Work history</h2>
         <div className="mt-4 grid gap-4">
           {profile.experience.map((item) => {
             const update = updateExperienceAction.bind(null, item.id);
@@ -103,7 +103,7 @@ export default async function ProfilePage() {
                     <button className="btn btn-secondary" type="submit">Update</button>
                   </div>
                 </form>
-                <form action={remove} className="mt-3"><button className="text-sm font-bold text-red-300" type="submit">Remove experience</button></form>
+                <form action={remove} className="mt-3"><button className="text-sm font-medium text-red-300" type="submit">Remove experience</button></form>
               </article>
             );
           })}
@@ -119,7 +119,7 @@ export default async function ProfilePage() {
 
       <section className="mt-10">
         <p className="info-label">Education</p>
-        <h2 className="mt-2 text-2xl font-extrabold">Academic background</h2>
+        <h2 className="mt-2 text-xl font-semibold">Academic background</h2>
         <div className="mt-4 grid gap-4">
           {profile.education.map((item) => {
             const update = updateEducationAction.bind(null, item.id);
@@ -133,7 +133,7 @@ export default async function ProfilePage() {
                   <DateField name="endDate" value={item.endDate} />
                   <button className="btn btn-secondary" type="submit">Update</button>
                 </form>
-                <form action={remove} className="mt-3"><button className="text-sm font-bold text-red-300" type="submit">Remove education</button></form>
+                <form action={remove} className="mt-3"><button className="text-sm font-medium text-red-300" type="submit">Remove education</button></form>
               </article>
             );
           })}

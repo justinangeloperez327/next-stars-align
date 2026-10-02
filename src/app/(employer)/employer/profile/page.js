@@ -24,16 +24,16 @@ export default async function EmployerProfilePage() {
         <div className="flex flex-wrap items-start gap-5">
           <div className="company-avatar h-16 w-16 rounded-2xl text-xl" aria-hidden="true">{company.name.charAt(0).toUpperCase()}</div>
           <div>
-            <h2 className="text-2xl font-black">{company.name}</h2>
+            <h2 className="text-xl font-semibold">{company.name}</h2>
             <p className="muted mt-2">{company.industry} · {company.location}</p>
           </div>
         </div>
 
         <dl className="mt-8 grid gap-5 sm:grid-cols-2">
-          <div className="info-block"><dt className="info-label">Account email</dt><dd className="mt-2 font-bold">{profile.user.email}</dd></div>
-          <div className="info-block"><dt className="info-label">Company size</dt><dd className="mt-2 font-bold">{company.size || "Not specified"}</dd></div>
-          <div className="info-block"><dt className="info-label">Website</dt><dd className="mt-2 font-bold">{company.website || "Not specified"}</dd></div>
-          <div className="info-block"><dt className="info-label">Location</dt><dd className="mt-2 font-bold">{company.location}</dd></div>
+          <div className="info-block"><dt className="info-label">Account email</dt><dd className="mt-2 font-medium">{profile.user.email}</dd></div>
+          <div className="info-block"><dt className="info-label">Company size</dt><dd className="mt-2 font-medium">{company.size || "Not specified"}</dd></div>
+          <div className="info-block"><dt className="info-label">Website</dt><dd className="mt-2 font-medium">{company.website || "Not specified"}</dd></div>
+          <div className="info-block"><dt className="info-label">Location</dt><dd className="mt-2 font-medium">{company.location}</dd></div>
         </dl>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">

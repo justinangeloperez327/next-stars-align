@@ -19,7 +19,7 @@ export default async function ApplicationPage({ params, searchParams }) {
     <div className="shell py-14 sm:py-20">
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Application</p>
-        <h1 className="mt-3 text-4xl font-black tracking-[-0.05em]">Apply for {job.title}</h1>
+        <h1 className="mt-3 text-xl font-semibold tracking-[-0.05em]">Apply for {job.title}</h1>
         <p className="muted mt-3">{job.company?.name} · {job.location} · {job.type}</p>
 
         <section className="surface mt-8 rounded-[1.5rem] p-6 sm:p-8">
