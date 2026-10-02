@@ -1,6 +1,7 @@
 import "server-only";
 
 import { databaseConfigured, withDatabase } from "@/lib/prisma";
+import { getDemoCompanies, getDemoCompany, getDemoJob, getDemoJobs } from "@/lib/demo-data";
 
 function dateListedStart(value) {
   if (!value) return undefined;
@@ -68,7 +69,7 @@ export async function listJobs(filters = {}) {
       include: { company: true },
       orderBy: { createdAt: "desc" },
     }),
-    [],
+    getDemoJobs(filters),
   );
 }
 
@@ -88,7 +89,7 @@ export async function getJob(jobId, userId = null) {
     });
 
     return { ...job, applied: Boolean(application) };
-  }, null);
+  }, getDemoJob(jobId));
 }
 
 export async function listCompanies() {
@@ -99,7 +100,7 @@ export async function listCompanies() {
       },
       orderBy: { name: "asc" },
     }),
-    [],
+    getDemoCompanies(),
   );
 }
 
@@ -114,7 +115,7 @@ export async function getCompany(companyId) {
         },
       },
     }),
-    null,
+    getDemoCompany(companyId),
   );
 }
 
