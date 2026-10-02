@@ -56,7 +56,7 @@ export default async function ApplicationsPage({ searchParams }) {
                 <span className="text-sm">{application.job.title}</span>
                 <StatusBadge status={application.status} />
                 <span className="muted text-sm">{formatDate(application.createdAt)}</span>
-                <Link className="text-sm font-medium text-violet-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
+                <Link className="text-sm font-medium text-sky-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
               </div>
             );
           })}

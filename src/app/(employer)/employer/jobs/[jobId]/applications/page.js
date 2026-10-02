@@ -53,7 +53,7 @@ export default async function JobApplicationsPage({ params, searchParams }) {
                 <span className="text-sm">{years} experience entr{years === 1 ? "y" : "ies"}</span>
                 <StatusBadge status={application.status} />
                 <span className="muted text-sm">{formatDate(application.createdAt)}</span>
-                <Link className="text-sm font-bold text-violet-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
+                <Link className="text-sm font-bold text-sky-300" href={"/employer/applications/" + application.id + "/view"}>Review →</Link>
               </div>
             );
           })}

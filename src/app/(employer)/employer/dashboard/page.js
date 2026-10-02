@@ -42,7 +42,7 @@ export default async function EmployerDashboardPage() {
         <section className="surface rounded-[1.4rem] p-5 sm:p-6">
           <div className="section-heading">
             <div><p className="info-label">Candidate activity</p><h2 className="mt-2 text-xl font-semibold">Recent applications</h2></div>
-            <Link className="text-sm font-medium text-violet-300" href="/employer/applications">View all →</Link>
+            <Link className="text-sm font-medium text-sky-300" href="/employer/applications">View all →</Link>
           </div>
 
           {dashboard?.recentApplications?.length ? (
